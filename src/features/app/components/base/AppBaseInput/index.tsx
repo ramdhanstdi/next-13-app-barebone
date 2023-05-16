@@ -1,11 +1,14 @@
+"use client";
+
 import { cn } from "@/features/app/utils/twmerge.utils";
 import { cva, VariantProps } from "class-variance-authority";
-import { forwardRef, HTMLAttributes } from "react";
+import { forwardRef, HTMLAttributes, useCallback, useState } from "react";
 import { ErrorMessage, Field } from "formik";
+import { FaEye } from "react-icons/fa";
 
 // Variant
 const inputVariant = cva(
-  " w-full lg:h-[40px] h-[32px] text-slate-900 text-center lg:text-base text-sm lg:border-2 border border-slate-600 rounded-md"
+  " w-full lg:h-[40px] h-[32px] text-slate-900 text-center lg:text-[20px] text-[16px] lg:border-2 rounded-md"
 );
 
 // Interface
@@ -19,13 +22,31 @@ interface AppBaseInputProps
 
 // Component
 const AppBaseInput = forwardRef<HTMLInputElement, AppBaseInputProps>(
-  ({ className, name, label, type, ...props }, ref) => {
+  ({ className, name, placeholder, label, type, ...props }, ref) => {
+    const [see, setSee] = useState(false);
+    const onClickSee = useCallback(() => {
+      setSee(!see);
+    }, [see]);
     return (
       <div ref={ref} {...props} className="py-2 my-2 relative">
-        <label className="lg:text-[20px] md:text-[16px] text-[12px] text-black mb-2 font-semibold">
+        <label className="lg:text-[20px] md:text-[16px] text-[12px] text-[#2C3333] mb-2 font-semibold">
           {label}
         </label>
-        <Field name={name} type={type} className={cn(inputVariant())} />
+        <div className="flex items-center gap-3 border-2 border-[#2A2A2A] rounded-md p-1">
+          <Field
+            name={name}
+            type={!see ? type : "text"}
+            placeholder={placeholder}
+            className={cn(inputVariant())}
+          />
+          {type === "password" && (
+            <FaEye
+              className="hover:cursor-pointer"
+              size={30}
+              onClick={onClickSee}
+            />
+          )}
+        </div>
         <div className="w-full text-red-600 text-left absolute lg:text-[14px] text-[10px] ">
           <ErrorMessage name={name} />
         </div>
@@ -36,4 +57,4 @@ const AppBaseInput = forwardRef<HTMLInputElement, AppBaseInputProps>(
 
 AppBaseInput.displayName = "AppBaseInput";
 
-export default AppBaseInput;
+export { AppBaseInput };
