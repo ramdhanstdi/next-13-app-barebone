@@ -23,12 +23,12 @@ import {
   FaUserAlt,
 } from "react-icons/fa";
 
-type Props = {
+type PropsSidebar = {
   open: boolean;
-  setOpen(open: boolean): void;
   role: number;
 };
-const Sidebar = ({ open, role }: Props) => {
+
+const Sidebar = ({ open, role }: PropsSidebar) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const logout = useCallback(() => {

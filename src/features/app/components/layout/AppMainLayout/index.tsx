@@ -1,7 +1,7 @@
 "use client";
 
 // React
-import { FC, ReactNode, useEffect, useState } from "react";
+import { FC, ReactNode, useState } from "react";
 
 // Guard
 import AppPageGuard from "../../AppPagesGuard";
@@ -11,6 +11,7 @@ import { Navbar, Sidebar } from "./components";
 
 interface AppMainLayoutProps {
   children: ReactNode;
+  role: number;
 }
 
 const AppMainLayout: FC<AppMainLayoutProps> = ({ children, role }) => {

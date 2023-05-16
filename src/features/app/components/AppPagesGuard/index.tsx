@@ -20,6 +20,11 @@ import { auth_logout } from "@/features/auth/redux/slice.auth";
 
 type PageProps = { [key: string]: any };
 
+type decodeType = {
+  exp: number;
+  role: string;
+};
+
 const AppPageGuard = <P extends PageProps>(
   WrappedComponent: ComponentType<P>
 ): FC<P> => {
@@ -34,8 +39,8 @@ const AppPageGuard = <P extends PageProps>(
       return null;
     }
 
-    if (isAuthenticated) {
-      const decoded = jwt_decode(isAuthenticated);
+    if (typeof isAuthenticated === "string") {
+      const decoded: decodeType = jwt_decode(isAuthenticated);
       const now = Math.floor(new Date().getTime() / 1000.0) + 25200;
       if (decoded.exp < now) {
         dispatch(auth_logout());

@@ -52,4 +52,6 @@ const AppBaseButton = forwardRef<HTMLButtonElement, AppBaseButtonProps>(
   }
 );
 
+AppBaseButton.displayName = "AppBaseButton";
+
 export { AppBaseButton };
